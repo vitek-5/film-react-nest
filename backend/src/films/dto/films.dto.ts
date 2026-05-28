@@ -12,8 +12,8 @@ export class ScheduleDTO {
   id: string;
   @IsDateString()
   daytime: string;
-  @IsString()
-  hall: string;
+  @IsNumber()
+  hall: number;
   @IsNumber()
   rows: number;
   @IsNumber()

@@ -22,7 +22,7 @@ export class FilmsConverter {
       daytime: s.daytime
         ? new Date(s.daytime).toISOString()
         : new Date().toISOString(),
-      hall: String(s.hall),
+      hall: Number(s.hall),
       rows: s.rows,
       seats: s.seats,
       price: s.price,
