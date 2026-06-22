@@ -1,7 +1,9 @@
 import { FilmsDTO, ScheduleDTO } from './dto/films.dto';
+import { Film } from '../entities/film.entity';
+import { Schedule } from '../entities/schedule.entity';
 
 export class FilmsConverter {
-  static toDto(doc: any): FilmsDTO {
+  static toDto(doc: Film): FilmsDTO {
     return {
       id: doc.id,
       rating: doc.rating,
@@ -16,7 +18,7 @@ export class FilmsConverter {
     };
   }
 
-  static toScheduleDto(s: any): ScheduleDTO {
+  static toScheduleDto(s: Schedule): ScheduleDTO {
     return {
       id: s.id,
       daytime: s.daytime
@@ -26,7 +28,7 @@ export class FilmsConverter {
       rows: s.rows,
       seats: s.seats,
       price: s.price,
-      taken: s.taken || [],
+      taken: (s.taken || []).filter((seat) => seat.length > 0),
     };
   }
 }
