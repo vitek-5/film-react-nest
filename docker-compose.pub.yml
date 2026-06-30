@@ -10,7 +10,6 @@ services:
       DB_NAME: ${DB_NAME}
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - ${DB_PORT}
     networks:
