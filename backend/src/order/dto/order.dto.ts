@@ -40,7 +40,6 @@ export class OrderItemDto {
   time?: string;
 }
 
-// 👇 Ответ: подтверждение с добавленным id
 export class OrderConfirmationDto extends OrderItemDto {
   id: string;
 }
