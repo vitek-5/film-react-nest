@@ -1,27 +1,37 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { OrderController } from '../controllers/order.controller';
-import { OrderService } from '../services/order.service';
+import { Test } from '@nestjs/testing';
+import { FilmsController } from '../../films/controllers/films.controller';
+import { FilmsService } from '../../films/services/films.service';
+import { fixtureFilm1 } from '../../fixtures/films.fixtures';
 
-describe('OrderController', () => {
-  let controller: OrderController;
+describe('FilmsController', () => {
+  let controller: FilmsController;
+  let service: FilmsService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [OrderController],
-      providers: [
-        {
-          provide: OrderService,
-          useValue: {
-            create: jest.fn(),
-          },
-        },
-      ],
-    }).compile();
+    const moduleRef = await Test.createTestingModule({
+      controllers: [FilmsController],
+      providers: [FilmsService],
+    })
+      .overrideProvider(FilmsService)
+      .useValue({
+        findAll: jest.fn(),
+        findSchedule: jest.fn(),
+      })
+      .compile();
 
-    controller = module.get<OrderController>(OrderController);
+    controller = moduleRef.get<FilmsController>(FilmsController);
+    service = moduleRef.get<FilmsService>(FilmsService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('.findAll() should call findAll method of the service', async () => {
+    await controller.getAllFilms();
+
+    expect(service.findAll).toHaveBeenCalled();
+  });
+
+  it('.findSchedule() should call findSchedule method of the service', async () => {
+    await controller.getFilmSchedule(fixtureFilm1.id);
+
+    expect(service.findSchedule).toHaveBeenCalledWith(fixtureFilm1.id);
   });
 });

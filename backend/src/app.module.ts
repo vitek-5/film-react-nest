@@ -21,7 +21,7 @@ import { FilmsPostgresRepository } from './repository/films.postgres.repository'
     AppConfigModule,
     DatabaseModule,
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'public', 'content', 'afisha'),
+      rootPath: path.join(process.cwd(), 'public', 'content', 'afisha'),
       serveRoot: '/content/afisha',
       serveStaticOptions: {
         index: false,

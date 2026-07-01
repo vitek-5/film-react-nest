@@ -5,7 +5,7 @@ const env = process.env;
 function parseDatabaseConfig(): AppConfigDatabase {
   return {
     driver: env.DATABASE_DRIVER,
-    host: env.DATABASE_URL,
+    host: env.DATABASE_HOST,
     port: Number(env.DATABASE_PORT),
     username: env.DATABASE_USERNAME,
     password: env.DATABASE_PASSWORD,
