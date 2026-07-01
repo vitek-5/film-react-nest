@@ -1,6 +1,7 @@
 services:
   database:
     image: postgres:16.4
+    restart: on-failure:5
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -24,7 +25,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin_container
-    restart: always
+    restart: on-failure:5
     ports:
       - ${PGADMIN_PORT}
     environment:
@@ -37,10 +38,11 @@ services:
   
   frontend:
     image: 'ghcr.io/${OWNER}/frontend:latest'
+    restart: on-failure:5
     environment:
-      VITE_BASE_URL: /
-      VITE_API_URL: /api/afisha
-      VITE_CDN_URL: /content/afisha
+      VITE_BASE_URL: ${VITE_BASE_URL}
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_CDN_URL: ${VITE_CDN_URL}
     volumes:
       - frontend_build:/app/dist
     depends_on:
@@ -49,7 +51,8 @@ services:
   
   migrations:
     image: 'ghcr.io/${OWNER}/backend:latest'
-    command: ["npm", "run", "migrate:up"]
+    restart: on-failure:5
+    command: ["npm", "run", "migrate:up:prod"]
     environment:
       DATABASE_DRIVER: ${DATABASE_DRIVER}
       DATABASE_HOST: ${DATABASE_HOST}
@@ -65,6 +68,7 @@ services:
       
   backend:
     image: 'ghcr.io/${OWNER}/backend:latest'
+    restart: on-failure:5
     environment:
       PORT: ${BACKEND_PORT}
       DEBUG: ${DEBUG}
@@ -84,6 +88,7 @@ services:
   
   server:
     image: 'ghcr.io/${OWNER}/server:latest'
+    restart: on-failure:5
     ports:
       - ${SERVER_PORTS}
     volumes:

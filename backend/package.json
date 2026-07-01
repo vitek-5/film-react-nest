@@ -22,6 +22,7 @@
     "migrate:generate": "npm run typeorm migration:generate -- -d ormconfig.ts",
     "migrate:create": "npm run typeorm migration:create --",
     "migrate:up": "npm run typeorm migration:run -- -d ormconfig.ts",
+    "migrate:up:prod": "node node_modules/typeorm/cli.js migration:run -d dist/ormconfig.js",
     "migrate:down": "npm run typeorm migration:revert -- -d ormconfig.ts"
   },
   "dependencies": {
